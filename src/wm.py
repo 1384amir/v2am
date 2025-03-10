@@ -1,4 +1,3 @@
-
 import json
 import random
 import requests
@@ -19,13 +18,14 @@ def update_config_file(config_file):
             data = json.load(f)
 
         ips = fetch_ips()
-        ipv4_list = random.sample(ips['ipv4'], 2)
+        ipv4_list = [ip for ip in ips['ipv4'] if ip.startswith("162.")] # تغییر در این خط
 
+        if not ipv4_list:
+            print("هیچ IP با شروع 162 پیدا نشد.")
+            return
 
-        # انتخاب تصادفی از IPهای IPv4 و IPv6
         new_endpoint = random.choice(ipv4_list)
 
-        # تغییر endpoint در فایل JSON
         data['outbounds'][0]['settings']['peers'][0]['endpoint'] = new_endpoint
 
         with open(config_file, 'w') as f:
