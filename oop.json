@@ -2062,7 +2062,7 @@
         "chain"
       ],
       "probeUrl": "https://www.gstatic.com/generate_204",
-      "probeInterval": "30s",
+      "probeInterval": "10s",
       "enableConcurrency": true
     },
     "stats": {}
