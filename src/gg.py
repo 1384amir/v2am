@@ -21,7 +21,7 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:
         # Determine new endpoint value
         if use_random_ip:
             ips = fetch_ips()
-            ipv4_list = [ip for ip in ips['ipv4'] if ip.startswith("162.")]
+            ipv4_list = [ip for ip in ips['ipv4']]
             
             if not ipv4_list:
                 print("هیچ IP با شروع 162 پیدا نشد.")
