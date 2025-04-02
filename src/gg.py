@@ -4,12 +4,12 @@ import requests
 
 def fetch_ips():
     try:
-        response = requests.get('https://raw.githubusercontent.com/ircfspace/endpoint/refs/heads/main/ip.json')
+        response = requests.get('https://raw.githubusercontent.com/1384amir/ipscan/refs/heads/main/ip.json')
         data = response.json()
         return data
     except Exception as e:
         return {
-            "ipv4": ["162.159.192.23:859", "162.159.192.178:4500"]
+            "ipv4": ["162.159.254.110", "104.22.34.132"]
         }
 
 def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:859"):
