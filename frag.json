@@ -1,0 +1,1148 @@
+{
+  "remarks": "\uD83D\uDCA6 BPB F - Best Fragment \uD83D\uDE0E",
+  "log": {
+    "loglevel": "warning"
+  },
+  "dns": {
+    "hosts": {
+      "tyfghg.pages.dev": [
+        "104.21.16.1",
+        "104.21.32.1",
+        "104.21.112.1",
+        "104.21.64.1",
+        "104.21.80.1",
+        "104.21.96.1",
+        "104.21.48.1",
+        "2606:4700:3030::6815:7001",
+        "2606:4700:3030::6815:2001",
+        "2606:4700:3030::6815:3001",
+        "2606:4700:3030::6815:1001",
+        "2606:4700:3030::6815:4001",
+        "2606:4700:3030::6815:5001",
+        "2606:4700:3030::6815:6001"
+      ]
+    },
+    "servers": [
+      "https://dns.google/dns-query",
+      {
+        "address": "https://8.8.8.8/dns-query",
+        "domains": [
+          "full:dns.google"
+        ],
+        "skipFallback": true
+      }
+    ],
+    "queryStrategy": "UseIP",
+    "tag": "dns"
+  },
+  "inbounds": [
+    {
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true,
+        "routeOnly": true
+      },
+      "tag": "socks-in"
+    },
+    {
+      "port": 10809,
+      "protocol": "http",
+      "settings": {
+        "auth": "noauth",
+        "udp": true,
+        "userLevel": 8
+      },
+      "sniffing": {
+        "destOverride": [
+          "http",
+          "tls"
+        ],
+        "enabled": true,
+        "routeOnly": true
+      },
+      "tag": "http-in"
+    },
+    {
+      "port": 10853,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "1.1.1.1",
+        "network": "tcp,udp",
+        "port": 53
+      },
+      "tag": "dns-in"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-1"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-1"
+    },
+    {
+      "tag": "frag-1",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "10-20",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-2"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-2"
+    },
+    {
+      "tag": "frag-2",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "20-30",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-3"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-3"
+    },
+    {
+      "tag": "frag-3",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "30-40",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-4"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-4"
+    },
+    {
+      "tag": "frag-4",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "40-50",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-5"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-5"
+    },
+    {
+      "tag": "frag-5",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "50-60",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-6"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-6"
+    },
+    {
+      "tag": "frag-6",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "60-70",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-7"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-7"
+    },
+    {
+      "tag": "frag-7",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "70-80",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-8"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-8"
+    },
+    {
+      "tag": "frag-8",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "80-90",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-9"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-9"
+    },
+    {
+      "tag": "frag-9",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "90-100",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-10"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-10"
+    },
+    {
+      "tag": "frag-10",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "10-30",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-11"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-11"
+    },
+    {
+      "tag": "frag-11",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "20-40",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-12"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-12"
+    },
+    {
+      "tag": "frag-12",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "30-50",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-13"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-13"
+    },
+    {
+      "tag": "frag-13",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "40-60",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-14"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-14"
+    },
+    {
+      "tag": "frag-14",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "50-70",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-15"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-15"
+    },
+    {
+      "tag": "frag-15",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "60-80",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-16"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-16"
+    },
+    {
+      "tag": "frag-16",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "70-90",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-17"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-17"
+    },
+    {
+      "tag": "frag-17",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "80-100",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tyfghg.pages.dev",
+            "port": 443,
+            "users": [
+              {
+                "id": "d08be749-9157-4457-9a70-89f992c2e850",
+                "encryption": "none",
+                "level": 8
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "sockopt": {
+          "dialerProxy": "frag-18"
+        },
+        "wsSettings": {
+          "host": "tyfghg.pages.dev",
+          "headers": {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+          },
+          "path": "/2rOeOUhKxGBDpOJ1?ed=2560"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "fingerprint": "randomized",
+          "alpn": [
+            "h2",
+            "http/1.1"
+          ],
+          "serverName": "TyFgHG.pAGEs.DEV"
+        }
+      },
+      "tag": "prox-18"
+    },
+    {
+      "tag": "frag-18",
+      "protocol": "freedom",
+      "settings": {
+        "fragment": {
+          "packets": "tlshello",
+          "length": "100-200",
+          "interval": "1-1"
+        },
+        "domainStrategy": "UseIPv4v6"
+      }
+    },
+    {
+      "protocol": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIP"
+      },
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      },
+      "tag": "block"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "8": {
+        "connIdle": 300,
+        "downlinkOnly": 1,
+        "handshake": 4,
+        "uplinkOnly": 1
+      }
+    },
+    "system": {
+      "statsOutboundUplink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "inboundTag": [
+          "dns-in"
+        ],
+        "outboundTag": "dns-out",
+        "type": "field"
+      },
+      {
+        "inboundTag": [
+          "socks-in",
+          "http-in"
+        ],
+        "port": "53",
+        "network": "udp",
+        "outboundTag": "dns-out",
+        "type": "field"
+      },
+      {
+        "inboundTag": [
+          "dns"
+        ],
+        "balancerTag": "all",
+        "type": "field"
+      },
+      {
+        "network": "tcp,udp",
+        "balancerTag": "all",
+        "type": "field"
+      }
+    ],
+    "balancers": [
+      {
+        "tag": "all",
+        "selector": [
+          "prox"
+        ],
+        "strategy": {
+          "type": "leastPing"
+        }
+      }
+    ]
+  },
+  "observatory": {
+    "subjectSelector": [
+      "prox"
+    ],
+    "probeUrl": "https://www.gstatic.com/generate_204",
+    "probeInterval": "30s",
+    "enableConcurrency": true
+  },
+  "stats": {}
+}
