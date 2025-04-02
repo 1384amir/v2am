@@ -35,7 +35,7 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:
         def update_endpoint_recursive(obj):
             if isinstance(obj, dict):
                 for key, value in obj.items():
-                    if key.lower() == 'endpoint':
+                    if key.lower() == 'address':
                         obj[key] = new_endpoint
                     else:
                         update_endpoint_recursive(value)
@@ -59,7 +59,7 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:
         print(f"خطا رخ داد: {str(e)}")
 
 if __name__ == "__main__":
-    config_file = 'oop.json'  # Replace with your JSON file path
+    config_file = 'frag.json'  # Replace with your JSON file path
     
     # Use fixed IP (196.198.101.0)
     update_endpoints(config_file, use_random_ip=True)
