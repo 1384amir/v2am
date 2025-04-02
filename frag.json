@@ -1,5 +1,5 @@
 {
-  "remarks": "\uD83D\uDCA6 BPB F - Best Fragment \uD83D\uDE0E",
+  "remarks": "\ud83d\udca6 BPB F - Best Fragment \ud83d\ude0e",
   "log": {
     "loglevel": "warning"
   },
@@ -25,7 +25,7 @@
     "servers": [
       "https://dns.google/dns-query",
       {
-        "address": "https://8.8.8.8/dns-query",
+        "address": "104.22.34.136",
         "domains": [
           "full:dns.google"
         ],
@@ -76,7 +76,7 @@
       "port": 10853,
       "protocol": "dokodemo-door",
       "settings": {
-        "address": "1.1.1.1",
+        "address": "104.22.34.136",
         "network": "tcp,udp",
         "port": 53
       },
@@ -89,7 +89,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -143,7 +143,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -197,7 +197,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -251,7 +251,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -305,7 +305,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -359,7 +359,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -413,7 +413,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -467,7 +467,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -521,7 +521,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -575,7 +575,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -629,7 +629,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -683,7 +683,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -737,7 +737,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -791,7 +791,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -845,7 +845,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -899,7 +899,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -953,7 +953,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
@@ -1007,7 +1007,7 @@
       "settings": {
         "vnext": [
           {
-            "address": "tyfghg.pages.dev",
+            "address": "104.22.34.136",
             "port": 443,
             "users": [
               {
