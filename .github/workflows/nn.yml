@@ -2,7 +2,7 @@ name: Update Configs V3
 
 on:
   schedule:
-    - cron: '0 * * * 1'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
         pip install requests
     
     - name: Update configs
-      run: python src/gg.py
+      run: python src/oop.py
     
     - name: Commit and push if changed
       run: |
