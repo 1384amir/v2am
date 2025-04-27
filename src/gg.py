@@ -1,81 +1,81 @@
 import json
 import random
 import requests
-import urllib.parse # Potentially useful for more robust URL parsing, but simple split might suffice here.
+import urllib.parse # Imported, but not strictly used in this version, kept for potential future use
 
 def fetch_ips():
     """
-    Fetches a list of IPv4 addresses from a GitHub repository.
+    Fetches a list of IPv4 addresses (potentially with ports) from a GitHub repository.
     Returns a dictionary with an 'ipv4' key containing the list of IPs,
     or a fallback list if fetching fails.
     """
     try:
-        response = requests.get('https://raw.githubusercontent.com/1384amir/ipscan/refs/heads/main/ip.json')
+        # Using the new URL you provided
+        response = requests.get('https://raw.githubusercontent.com/ircfspace/endpoint/refs/heads/main/ip.json')
         response.raise_for_status() # Raise an HTTPError for bad responses (4xx or 5xx)
         data = response.json()
         # Ensure data has the expected structure
         if not isinstance(data, dict) or 'ipv4' not in data or not isinstance(data['ipv4'], list):
              print("هشدار: ساختار داده دریافتی از منبع IP غیرمنتظره است.")
-             return {"ipv4": ["162.159.254.110", "104.22.34.132"]} # Fallback
+             return {"ipv4": ["162.159.192.23:859", "162.159.192.178:4500"]} # Fallback
         return data
     except requests.exceptions.RequestException as e:
         print(f"خطا در واکشی IP ها: {e}. استفاده از IP های جایگزین.")
-        return {"ipv4": ["162.159.254.110", "104.22.34.132"]} # Fallback IPs
+        return {"ipv4": ["162.159.192.23:859", "162.159.192.178:4500"]} # Fallback IPs
     except json.JSONDecodeError:
          print("خطا در خواندن JSON از منبع IP. استفاده از IP های جایگزین.")
-         return {"ipv4": ["162.159.254.110", "104.22.34.132"]} # Fallback IPs
+         return {"ipv4": ["162.159.192.23:859", "162.159.192.178:4500"]} # Fallback IPs
     except Exception as e:
         print(f"خطای ناشناخته در واکشی IP ها: {e}. استفاده از IP های جایگزین.")
-        return {"ipv4": ["162.159.254.110", "104.22.34.132"]} # Fallback IPs
+        return {"ipv4": ["162.159.192.23:859", "162.159.192.178:4500"]} # Fallback IPs
 
 
-def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23"):
+def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:859"):
     """
-    Reads a JSON file containing a list of warp:// URLs, updates the IP
-    address in each URL, and writes the modified list back to the file.
+    Reads a JSON file containing a list of warp:// URLs, updates the IP and Port
+    component in each URL, and writes the modified list back to the file.
 
     Args:
         config_file (str): The path to the JSON file.
-        use_random_ip (bool): If True, fetches a random IP from fetch_ips.
-                               If False, uses the provided fixed_ip.
-        fixed_ip (str): The fixed IP address to use when use_random_ip is False.
-                        (Note: The port from this string is IGNORED; the original
-                         port from each URL is preserved).
+        use_random_ip (bool): If True, fetches a random IP:PORT from fetch_ips.
+                               If False, uses the provided fixed_ip (IP:PORT).
+        fixed_ip (str): The fixed IP:PORT string to use when use_random_ip is False.
+                        This entire string will be used for replacement.
     """
     try:
         # Read the JSON file
-        with open(config_file, 'r', encoding='utf-8') as file: # Specify encoding
+        with open(config_file, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
         # Ensure the data is a list
         if not isinstance(data, list):
-            print(f"خطا: فایل '{config_file}' حاوی لیست JSON معتبر نیست.")
+            print(f"خطا: فایل '{config_file}' حاوی لیست JSON معتبر نیست. فرمت باید یک لیست از رشته‌ها باشد.")
             return
 
-        # Determine the target IP address
-        target_ip = ""
+        # Determine the target IP:PORT string (either random or fixed)
+        target_ip_port = ""
         if use_random_ip:
             ips_data = fetch_ips()
             ipv4_list = ips_data.get('ipv4', [])
 
-            # Use fallback IP if no random IPs are available
-            if not ipv4_list:
-                print("هیچ IP معتبری برای استفاده یافت نشد. استفاده از IP ثابت جایگزین.")
-                target_ip = fixed_ip
+            # Filter for IPs starting with 162. (based on original code)
+            # Note: This filter applies to the fetched IP:PORT strings
+            filtered_ips = [ip for ip in ipv4_list if isinstance(ip, str) and ip.startswith("162.")]
+
+            # Use fallback IP:PORT if no suitable random IPs are found after filtering
+            if not filtered_ips:
+                print("هیچ IP معتبری با شروع 162. برای استفاده یافت نشد. استفاده از IP ثابت جایگزین.")
+                target_ip_port = fixed_ip
             else:
-                # Filter for 162 IPs if desired (based on original code comment, though not implemented there)
-                # filtered_ips = [ip for ip in ipv4_list if ip.startswith("162.")]
-                # if filtered_ips:
-                #     target_ip = random.choice(filtered_ips)
-                # else:
-                #     print("هشدار: هیچ IP با شروع 162 یافت نشد. استفاده از هر IP موجود یا ثابت جایگزین.")
-                #     target_ip = random.choice(ipv4_list) if ipv4_list else fixed_ip
-                target_ip = random.choice(ipv4_list) # Use any random IP if available
-
+                target_ip_port = random.choice(filtered_ips)
         else:
-            target_ip = fixed_ip
+            target_ip_port = fixed_ip
 
-        print(f"IP هدف برای به‌روزرسانی: {target_ip}")
+        if not target_ip_port:
+             print("خطا: نتوانست IP:PORT هدف معتبری را استخراج کند. به‌روزرسانی انجام نشد.")
+             return
+
+        print(f"IP:PORT هدف برای جایگزینی: {target_ip_port}")
 
         # List to hold the updated URLs
         updated_urls = []
@@ -101,22 +101,13 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23"
                          if char_index != -1:
                              end_of_host_port_index = min(end_of_host_port_index, char_index)
 
-                    host_port_part = parts_after_warp[:end_of_host_port_index]
+                    # Extract the rest of the URL (path, query, fragment)
                     rest_of_url = parts_after_warp[end_of_host_port_index:]
 
-                    # Split the host:port part to get the original port
-                    ip_port_split = host_port_part.split(':')
-
-                    if len(ip_port_split) == 2:
-                        original_port = ip_port_split[1]
-                        # Construct the new URL with the target IP and original port
-                        new_url = f"warp://{target_ip}:{original_port}{rest_of_url}"
-                        updated_urls.append(new_url)
-                        modified_count += 1
-                    else:
-                        # Handle cases where the format is unexpected (e.g., no port)
-                        print(f"هشدار: فرمت 'IP:PORT' در بخش '{host_port_part}' یافت نشد. URL اصلی حفظ می‌شود: {url_string}")
-                        updated_urls.append(url_string)
+                    # Construct the new URL with the target IP:PORT and the rest of the URL
+                    new_url = f"warp://{target_ip_port}{rest_of_url}"
+                    updated_urls.append(new_url)
+                    modified_count += 1
 
                 except Exception as e:
                     print(f"خطا در پردازش URL '{url_string}': {e}. URL اصلی حفظ می‌شود.")
@@ -126,11 +117,11 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23"
                 updated_urls.append(url_string)
 
         # Write the modified list back to the file
-        with open(config_file, 'w', encoding='utf-8') as file: # Specify encoding
+        with open(config_file, 'w', encoding='utf-8') as file:
             # use ensure_ascii=False to correctly write non-ASCII characters (like emojis)
             json.dump(updated_urls, file, indent=2, ensure_ascii=False)
 
-        print(f"فایل '{config_file}' با موفقیت به‌روزرسانی شد. تعداد {modified_count} URL به استفاده از IP: {target_ip} تغییر یافت.")
+        print(f"فایل '{config_file}' با موفقیت به‌روزرسانی شد. تعداد {modified_count} URL به استفاده از IP:PORT: {target_ip_port} تغییر یافتند.")
 
     except FileNotFoundError:
         print(f"خطا: فایل پیکربندی '{config_file}' یافت نشد.")
@@ -141,19 +132,21 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23"
 
 if __name__ == "__main__":
     # Define the path to your JSON configuration file
-    config_file = 'frag.json'
+    config_file = 'oop.json' # Replace with your actual JSON file path
 
     # --- Choose your update mode ---
 
-    # Option 1: Use a random IP fetched from the online source
-    # The script will fetch IPs and pick one randomly.
-    # If fetching fails, it will use the 'fixed_ip' provided in the function definition as a fallback.
+    # Option 1: Use a random IP:PORT fetched from the online source
+    # The script will fetch IP:PORTs and pick one randomly that starts with "162.".
+    # This entire chosen random IP:PORT will be used to update the IP:PORT part of URLs.
+    # If fetching fails or no suitable IPs are found, it will use the 'fixed_ip'
+    # provided below as a fallback.
     update_endpoints(config_file, use_random_ip=True)
 
-    # Option 2: Use a specific fixed IP address
-    # Uncomment the line below and comment the line above to use a fixed IP.
-    # The IP '196.198.101.0' is used as the target IP. The port in the original URLs will be preserved.
-    # update_endpoints(config_file, use_random_ip=False, fixed_ip="196.198.101.0")
+    # Option 2: Use a specific fixed IP:PORT string
+    # Uncomment the line below and comment the line above to use a fixed IP:PORT.
+    # The entire string '196.198.101.0:1234' will be used to update the IP:PORT part of URLs.
+    # update_endpoints(config_file, use_random_ip=False, fixed_ip="196.198.101.0:1234")
 
-    # Note: The 'fixed_ip' parameter only provides the IP address to use when use_random_ip is False
-    # or as a fallback. The original port from each URL is always kept.
+    # Note: The script now replaces the entire IP:PORT part of the warp:// URLs
+    # with the chosen target_ip_port string.
