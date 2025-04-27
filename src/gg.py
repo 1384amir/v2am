@@ -132,7 +132,7 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:
 
 if __name__ == "__main__":
     # Define the path to your JSON configuration file
-    config_file = 'oop.json' # Replace with your actual JSON file path
+    config_file = 'frag.json' # Replace with your actual JSON file path
 
     # --- Choose your update mode ---
 
