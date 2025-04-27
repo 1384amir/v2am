@@ -1,4 +1,4 @@
-import json
+import json # Still needed for fetch_ips, but not for reading/writing frog.txt
 import random
 import requests
 import urllib.parse # Imported, but not strictly used in this version, kept for potential future use
@@ -30,26 +30,26 @@ def fetch_ips():
         return {"ipv4": ["162.159.192.23:859", "162.159.192.178:4500"]} # Fallback IPs
 
 
-def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:859"):
+def update_urls_in_text_file(file_path, use_random_ip=False, fixed_ip="162.159.192.23:859"):
     """
-    Reads a JSON file containing a list of warp:// URLs, updates the IP and Port
-    component in each URL, and writes the modified list back to the file.
+    Reads a text file containing warp:// URLs (one per line), updates the IP and Port
+    component in each URL, and writes the modified URLs back to the file.
 
     Args:
-        config_file (str): The path to the JSON file.
+        file_path (str): The path to the text file.
         use_random_ip (bool): If True, fetches a random IP:PORT from fetch_ips.
                                If False, uses the provided fixed_ip (IP:PORT).
         fixed_ip (str): The fixed IP:PORT string to use when use_random_ip is False.
                         This entire string will be used for replacement.
     """
     try:
-        # Read the JSON file
-        with open(config_file, 'r', encoding='utf-8') as file:
-            data = json.load(file)
+        # Read the URLs from the text file, one line per URL
+        with open(file_path, 'r', encoding='utf-8') as file:
+            # Read all lines, strip leading/trailing whitespace (including newlines)
+            urls = [line.strip() for line in file if line.strip()] # Ignore empty lines
 
-        # Ensure the data is a list
-        if not isinstance(data, list):
-            print(f"خطا: فایل '{config_file}' حاوی لیست JSON معتبر نیست. فرمت باید یک لیست از رشته‌ها باشد.")
+        if not urls:
+            print(f"فایل '{file_path}' خالی است یا حاوی URL معتبری نیست.")
             return
 
         # Determine the target IP:PORT string (either random or fixed)
@@ -81,13 +81,8 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:
         updated_urls = []
         modified_count = 0
 
-        # Iterate through the list of URLs
-        for url_string in data:
-            # Ensure the item is a string before processing
-            if not isinstance(url_string, str):
-                updated_urls.append(url_string) # Keep non-string items as they are
-                continue
-
+        # Iterate through the list of URLs read from the file
+        for url_string in urls:
             # Check if it's a warp:// URL
             if url_string.startswith("warp://"):
                 try:
@@ -116,23 +111,21 @@ def update_endpoints(config_file, use_random_ip=False, fixed_ip="162.159.192.23:
                 # If it's not a warp:// URL, keep it as is
                 updated_urls.append(url_string)
 
-        # Write the modified list back to the file
-        with open(config_file, 'w', encoding='utf-8') as file:
-            # use ensure_ascii=False to correctly write non-ASCII characters (like emojis)
-            json.dump(updated_urls, file, indent=2, ensure_ascii=False)
+        # Write the modified list of URLs back to the text file, one per line
+        with open(file_path, 'w', encoding='utf-8') as file:
+            for url in updated_urls:
+                file.write(url + '\n') # Write each URL followed by a newline
 
-        print(f"فایل '{config_file}' با موفقیت به‌روزرسانی شد. تعداد {modified_count} URL به استفاده از IP:PORT: {target_ip_port} تغییر یافتند.")
+        print(f"فایل '{file_path}' با موفقیت به‌روزرسانی شد. تعداد {modified_count} URL به استفاده از IP:PORT: {target_ip_port} تغییر یافتند.")
 
     except FileNotFoundError:
-        print(f"خطا: فایل پیکربندی '{config_file}' یافت نشد.")
-    except json.JSONDecodeError:
-        print(f"خطا: فایل '{config_file}' حاوی JSON معتبر نیست. اطمینان حاصل کنید که فرمت یک لیست از رشته‌ها است.")
+        print(f"خطا: فایل '{file_path}' یافت نشد.")
     except Exception as e:
         print(f"خطا رخ داد: {str(e)}")
 
 if __name__ == "__main__":
-    # Define the path to your JSON configuration file
-    config_file = 'conf.txt' # Changed from 'oop.json' to 'frog.txt'
+    # Define the path to your text file
+    config_file = 'conf.txt' # Using 'frog.txt'
 
     # --- Choose your update mode ---
 
@@ -141,12 +134,12 @@ if __name__ == "__main__":
     # This entire chosen random IP:PORT will be used to update the IP:PORT part of URLs.
     # If fetching fails or no suitable IPs are found, it will use the 'fixed_ip'
     # provided below as a fallback.
-    update_endpoints(config_file, use_random_ip=True)
+    update_urls_in_text_file(config_file, use_random_ip=True)
 
     # Option 2: Use a specific fixed IP:PORT string
     # Uncomment the line below and comment the line above to use a fixed IP:PORT.
     # The entire string '196.198.101.0:1234' will be used to update the IP:PORT part of URLs.
-    # update_endpoints(config_file, use_random_ip=False, fixed_ip="196.198.101.0:1234")
+    # update_urls_in_text_file(config_file, use_random_ip=False, fixed_ip="196.198.101.0:1234")
 
-    # Note: The script now replaces the entire IP:PORT part of the warp:// URLs
-    # with the chosen target_ip_port string.
+    # Note: The script now reads and writes a plain text file, treating each line as a URL.
+    # It replaces the entire IP:PORT part of the warp:// URLs with the chosen target_ip_port string.
